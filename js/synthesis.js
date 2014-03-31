@@ -1,0 +1,137 @@
+//TODO LIST:
+//1. get reference pitch looping on the page
+//2. play the notes as a whole chord and in sequence
+//3. display the stop names as a transition 
+
+
+
+var testbc;
+var seqIndex = 0;
+
+function BusSynth(_busObjectArray){
+
+	var busObjectArray; 
+	var differenceArray;  
+	var timbreNotesArray = [];
+
+	
+	var mapRange = function(from, to, s) {
+		return to[0] + (s - from[0]) * (to[1] - to[0]) / (from[1] - from[0]);
+	};
+
+	var makeFreqArray = function(){
+		for (var i = 0; i < _busObjectArray.length; i++) {
+			differenceArray[i] = Math.floor(_busObjectArray[i].CallDistanceAlongRoute - 
+				_busObjectArray[i].DistanceFromCall);  
+		}
+	};
+
+	var makeTimbreNotes = function(_differenceArray) {
+
+		for (var i = 0; i < _differenceArray.length; i++) {
+			
+			_differenceArray[i] = mapRange([0, 19146], [220, 880], 
+											_differenceArray[i]);
+
+			timbreNotesArray[i] = T("sin", {freq: _differenceArray[i], 
+											mul:(1/_differenceArray.length)});
+		}
+		differenceArray = _differenceArray; 
+	};
+
+
+	this.constructor = function(){
+		
+		busObjectArray = _busObjectArray;
+		differenceArray = [];
+		makeFreqArray();
+		console.log(differenceArray);
+		makeTimbreNotes(differenceArray);
+	}();
+
+
+	this.getbusObjectArray = function(){
+		return busObjectArray;
+	};
+
+	this.getdifferenceArray = function(){
+		return differenceArray;
+	};
+
+	this.gettimbreNotesArray = function(){
+		return timbreNotesArray;
+	};
+
+	this.gettimbreNotesArrayFreq = function(index){
+		return timbreNotesArray[index].freq._.value;
+	};
+
+	this.play = function(index){	
+		if(index || index === 0){
+			T("perc", {r:1000}, timbreNotesArray[index]).on("ended", function() {
+				this.pause();
+			}).bang().play();
+		}
+		else {
+			T("perc", {r:5000}, timbreNotesArray).on("ended", function() {
+				this.pause();
+			}).bang().play();
+		}	
+	};
+}
+
+
+var playing = false; 
+var osc = T("sin", {freq:220, mul:0.25});
+var env = T("perc", {a:250, r:300}, osc).bang(); 
+var interval = T("interval", {interval:1000}, env); 
+
+
+$(document).ready(function(){
+
+
+	$('#reference_button').click(function() {
+		if(playing) interval.stop();
+		else {
+			interval.start();  
+			env.play();
+		}	
+		playing = !playing; 
+		console.log(playing);
+	});
+
+
+
+	$('#synthesis_button').click(function(){
+    //console.log("synth button clicked");
+    //Synthesis.play(); 
+
+    testbc = new BusSynth(BusInfo.parsedData);
+    console.log(testbc.getdifferenceArray()); 
+    testbc.play();
+
+});
+
+	$('#synthesisSeq_button').click(function(){
+    //console.log("synth button clicked");
+	playSequence();
+
+	function playSequence(){
+		var mInterval = setInterval(playit, 1000);
+		function playit(){
+			if(seqIndex < testbc.gettimbreNotesArray().length){
+				testbc.play(seqIndex);  
+				seqIndex++;
+			}
+			else {
+				clearInterval(mInterval);
+				seqIndex = 0;
+			}
+		}
+	}
+});
+});
+
+
+
+
