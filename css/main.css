@@ -11,8 +11,13 @@ textarea {
 }
 
 body {
-    font-size: 1em;
-    line-height: 1.4;
+  width:100%;
+  margin:0px auto;
+  background:rgb(30,30,30);
+  padding-top:50px;
+  font-family:helvetica,arial,sans-serif;
+  font-weight:bold;
+  color:white;
 }
 
 ::-moz-selection {
@@ -59,19 +64,70 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+#prompt{
+    font-family: Courier New;
+    text-align:center;
+    margin-bottom:80px;
+    font-size:20px;
+    width: auto;
+}
+
+input{
+    display: inline-block;
+}
+
+input:focus{
+    outline: none;
+}
 
 
+#input_container{
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+
+.defaultText { 
+    width: 300px; 
+}
+
+.defaultTextActive { 
+    color: #a1a1a1; font-style: italic; 
+    }
 
 
+#searchBox{
+    font-family: Courier New;
+    font-size: 20px;
+    height: 50px;
+    width: 33%;
+    text-align: center;
+    margin: 0px auto;
+    margin-top: 103px;
+
+}
 
 
+#left_button{
+    float: left;
+}
 
+#right_button{
+    float: right;
+}
 
+button{
+    width: auto;
+    height: auto;
+}
 
-
-
-
-
+p{
+    font-family: Courier New;
+    text-align:center;
+    margin-bottom:80px;
+    font-size:30px;
+    width: auto;
+}
 
 
 /* ==========================================================================

@@ -7,6 +7,11 @@
 
 var testbc;
 var seqIndex = 0;
+var playing = true; 
+var osc = T("sin", {freq:220, mul:0.35});
+var env = T("perc", {a:200, r:300}, osc).bang(); 
+var interval = T("interval", {interval:1000}, env);
+
 
 function BusSynth(_busObjectArray){
 
@@ -37,6 +42,7 @@ function BusSynth(_busObjectArray){
 											mul:(1/_differenceArray.length)});
 		}
 		differenceArray = _differenceArray; 
+		console.log(differenceArray);
 	};
 
 
@@ -81,56 +87,13 @@ function BusSynth(_busObjectArray){
 }
 
 
-var playing = false; 
-var osc = T("sin", {freq:220, mul:0.25});
-var env = T("perc", {a:250, r:300}, osc).bang(); 
-var interval = T("interval", {interval:1000}, env); 
-
-
-$(document).ready(function(){
-
-
-	$('#reference_button').click(function() {
-		if(playing) interval.stop();
-		else {
-			interval.start();  
-			env.play();
-		}	
-		playing = !playing; 
-		console.log(playing);
-	});
 
 
 
-	$('#synthesis_button').click(function(){
-    //console.log("synth button clicked");
-    //Synthesis.play(); 
 
-    testbc = new BusSynth(BusInfo.parsedData);
-    console.log(testbc.getdifferenceArray()); 
-    testbc.play();
+	
 
-});
-
-	$('#synthesisSeq_button').click(function(){
-    //console.log("synth button clicked");
-	playSequence();
-
-	function playSequence(){
-		var mInterval = setInterval(playit, 1000);
-		function playit(){
-			if(seqIndex < testbc.gettimbreNotesArray().length){
-				testbc.play(seqIndex);  
-				seqIndex++;
-			}
-			else {
-				clearInterval(mInterval);
-				seqIndex = 0;
-			}
-		}
-	}
-});
-});
+	
 
 
 

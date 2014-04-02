@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
+        <title>AudioBus</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -17,18 +17,26 @@
                          
     </head>
     <body>
+        <div id="prompt"> 
+            <h1>AudioBus</h1>
+        </div>
 
-        <p>Audio Bus</p>
+
+        <div id="input_container">
+            
+            <input id="left_button" type="image" name="left_button" value="submit" src="img/arrow_left.png">
+            </input>
+       
+            <input type="text" class="defaultText" id="searchBox" title="NYC MTA busline: e.g. B62"   
+            </input> 
+           
+            <input id="right_button" type="image" name="right_button" value="submit" src="img/arrow_right.png">   
+            </input>
         
-        <button id="info_button">click to get bus info</button>
+        </div>
 
-        <button id="synthesis_button">play chord</button>
-
-        <button id="synthesisSeq_button">play sequence</button>
-
-        <button id="reference_button">reference tone on/off</button>
-
-
+        <div id="stop_container"></div>
+        
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
