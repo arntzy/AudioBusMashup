@@ -4,7 +4,6 @@
 //http://bustime.mta.info/api/siri/vehicle-monitoring.json?key=0ba8db6a-edcf-4738-bdc5-56c2bb678f20&LineRef=MTA%20NYCT_B62&DirectionRef=1&VehicleMonitoringDetailLevel=calls
 
 //2. Is there a way to get the total length of a route in meters? 
-//3. Drill into data
 //4. Figure out what the farthest stop's callDistanceAlongRoute is, set that as the scale
 
 var BusInfo = {
@@ -26,7 +25,7 @@ function getBusInfo(searchTerm, direction) {
 
   $.ajax({
       url: bustimeURL + busTimeKey + "&LineRef=" + busLineSearchTerm + 
-      "&DirectionRef=" + direction,     
+      "&DirectionRef=" + direction + "&VehicleMonitoringDetailLevel=calls",     
       type: 'GET',
       dataType: "jsonp",
 
@@ -63,17 +62,21 @@ function getParsedBusInfo(siriObject){
 
 for (var j = 0; j < BusInfo.locationArray.length; j++) {
 
-    BusInfo.parsedData.push(_.extend(BusInfo.stopNamesArray[j], BusInfo.locationArray[j]));
-      
+    BusInfo.parsedData.push(_.extend(BusInfo.stopNamesArray[j], BusInfo.locationArray[j])); 
     }
   
+
     BusInfo.parsedData = _.sortBy(BusInfo.parsedData, 'CallDistanceAlongRoute');  
     console.log(BusInfo.parsedData);
     
+    var a = getJSONValues(siriObject, "CallDistanceAlongRoute");
+    maxRange = _.max(a); 
+    console.log(maxRange);
     testbc = new BusSynth(BusInfo.parsedData);
     //console.log(testbc.getdifferenceArray()); 
     testbc.play();
     getStopPointNames(BusInfo.parsedData);
+
 }
 
 // function getBusInfoTheEasyWay(siriObject){

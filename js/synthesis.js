@@ -11,7 +11,7 @@ var playing = true;
 var osc = T("sin", {freq:220, mul:0.35});
 var env = T("perc", {a:200, r:300}, osc).bang(); 
 var interval = T("interval", {interval:1000}, env);
-
+var maxRange = 20000; 
 
 function BusSynth(_busObjectArray){
 
@@ -35,7 +35,7 @@ function BusSynth(_busObjectArray){
 
 		for (var i = 0; i < _differenceArray.length; i++) {
 			
-			_differenceArray[i] = mapRange([0, 19146], [220, 880], 
+			_differenceArray[i] = mapRange([0, maxRange], [220, 880], 
 											_differenceArray[i]);
 
 			timbreNotesArray[i] = T("sin", {freq: _differenceArray[i], 
@@ -74,7 +74,7 @@ function BusSynth(_busObjectArray){
 
 	this.play = function(index){	
 		if(index || index === 0){
-			T("perc", {r:1000}, timbreNotesArray[index]).on("ended", function() {
+			T("perc", {r:1500}, timbreNotesArray[index]).on("ended", function() {
 				this.pause();
 			}).bang().play();
 		}
