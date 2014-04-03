@@ -1,9 +1,6 @@
-//TODO LIST:
-//1. get reference pitch looping on the page
-//2. play the notes as a whole chord and in sequence
-//3. display the stop names as a transition 
-
-
+//Aaron Arntz
+//AudioBus/synthesis.js
+//2014
 
 var testbc;
 var seqIndex = 0;
