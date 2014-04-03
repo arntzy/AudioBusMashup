@@ -9,8 +9,8 @@ HOTKEYS:
 
 'r' -- toggles reference tone on/off
 
-'s' -- plays the most recently queried busline and direction and outputs the
-notes in a sequence.  
+'s' -- plays the most recently queried busline/direction as a sequence of
+individual notes.  
  
 
 [AudioBus](http://arntzy.github.io/AudioBusMashup/audiobus.html)
